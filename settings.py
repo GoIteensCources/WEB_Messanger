@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 
 
 class DatabaseConfig:
-    DATABASE_NAME = os.getenv("DATABASE_NAME", "shoe_store")
+    DATABASE_NAME = os.getenv("DATABASE_NAME", "messanger_db")
     DB_USER = os.getenv("DB_USER", "postgres")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
 
