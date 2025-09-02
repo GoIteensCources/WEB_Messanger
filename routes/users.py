@@ -48,7 +48,7 @@ def register():
             flash("Реєстрація успішна, увійдіть у свій акаунт.")
             return redirect(url_for("login"))
 
-    return render_template("register.html", title="Реєстрація")
+    return render_template("auth/register.html", title="Реєстрація")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -65,7 +65,7 @@ def login():
         else:
             flash("Невірне ім'я користувача або пароль.")
             return redirect(url_for("login"))
-    return render_template("login.html", title="Вхід")
+    return render_template("auth/login.html", title="Вхід")
 
 
 @app.route("/logout")
