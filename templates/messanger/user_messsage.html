@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<h3>Чат з {{ username }}</h3>
+
+<div class="messages">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="message {% if msg.from_user == current_user.username %}from-me{% else %}from-user{% endif %}">
+                <b>{{ msg.from_user }}:</b> {{ msg.text }}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Повідомлень ще немає</p>
+    {% endif %}
+</div>
+
+<form method="POST">
+    <input type="text" name="text" placeholder="Напишіть повідомлення..." required>
+    <button type="submit">Надіслати</button>
+</form>
+
+{% endblock %}

@@ -17,9 +17,9 @@ class DatabaseConfig:
 
     SECRET_KEY = os.getenv("SECRET_KEY")
 
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024   # 16MB
-    MAX_FORM_MEMORY_SIZE = 1024 * 1024      # 1MB
-    MAX_FORM_PARTS = 500                    # Ліміт 500 полів
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
+    MAX_FORM_MEMORY_SIZE = 1024 * 1024  # 1MB
+    MAX_FORM_PARTS = 500  # Ліміт 500 полів
 
     def uri_postgres(self):
         return f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PASSWORD}@localhost:5432/{self.DATABASE_NAME}"
@@ -33,7 +33,7 @@ config = DatabaseConfig()
 
 # Налаштування бази даних Postgres
 # engine = create_engine(config.uri_postgres(), echo=True)
-engine = create_engine(config.uri_sqlite(), echo=True)
+engine = create_engine(config.uri_sqlite(), echo=False)
 Session = sessionmaker(bind=engine)
 
 

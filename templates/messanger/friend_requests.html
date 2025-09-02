@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Повідомлення{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+<h2>Запити на дружбу</h2>
+
+{% if friend_requests %}
+    <div class="list-group">
+        {% for request in friend_requests %}
+            <div class="list-group-item">
+                <h5>Запит від: {{ senders[request.sender].username }}</h5>
+                <p>Дата запиту: {{ request.id }} (ідентифікатор запиту)</p>
+                <div class="btn-group" role="group">
+                    <a href="{{ url_for('messanger.accept_friend_request', request_id=request.id) }}"
+                       class="btn btn-success">Прийняти</a>
+                    <a href="{{ url_for('messanger.decline_friend_request', request_id=request.id) }}"
+                       class="btn btn-danger">Відхилити</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>У вас немає нових запитів на дружбу.</p>
+{% endif %}
+
+<a href="{{ url_for('users.account') }}" class="btn btn-primary">Повернутися до акаунту</a>
+
+</div>
+{% endblock %}

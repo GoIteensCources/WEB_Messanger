@@ -1,11 +1,10 @@
-from flask import abort, flash, redirect, render_template, request, url_for
-from flask_login import  current_user, login_required, login_user, logout_user
+from flask import (Blueprint, abort, flash, redirect, render_template, request,
+                   url_for)
+from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from models import User
-from settings import DatabaseConfig, Session
-
-from flask import Blueprint
+from settings import Session
 
 bp = Blueprint("users", __name__)
 
@@ -35,7 +34,7 @@ def register():
         user = User.get_by_username(username)
         if user:
             flash("Користувач з таким ім'ям вже існує. Спробуйте інше ім'я.")
-            return redirect(url_for("register"))
+            return redirect(url_for("users.register"))
         else:
             new_user = User(username=username, password=hashed, email=email)
 
@@ -44,7 +43,7 @@ def register():
                 session_db.commit()
 
             flash("Реєстрація успішна, увійдіть у свій акаунт.")
-            return redirect(url_for("login"))
+            return redirect(url_for("users.login"))
 
     return render_template("auth/register.html", title="Реєстрація")
 
@@ -62,7 +61,7 @@ def login():
             return redirect(url_for("index"))
         else:
             flash("Невірне ім'я користувача або пароль.")
-            return redirect(url_for("login"))
+            return redirect(url_for("users.login"))
     return render_template("auth/login.html", title="Вхід")
 
 
@@ -70,4 +69,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for("users.login"))

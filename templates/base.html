@@ -9,7 +9,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
         crossorigin="anonymous">
     
-    <title>{% block title %}Shoes store{% endblock title %}</title>
+    <title>{% block title %} Chat messanger {% endblock title %}</title>
 </head>
 
 <body class="container">
@@ -31,9 +31,9 @@
     {% block content %}
 
     {% if current_user.is_authenticated %}
-        <p>Ви увійшли як {{ current_user.username }} | <a href="{{ url_for('logout') }}">Вийти</a></p>
+        <p>Ви увійшли як {{ current_user.username }} | <a href="{{ url_for('users.logout') }}">Вийти</a></p>
     {%else%}
-        <p>Ви не увійшли в систему. | <a href="{{ url_for('login') }}">Увійти</a> </p>
+        <p>Ви не увійшли в систему. | <a href="{{ url_for('users.login') }}">Увійти</a> </p>
     {% endif %}
 
     

@@ -3,7 +3,9 @@
 
 {% block content %}
     <h1>Це Аккаунт {{ current_user.username }} </h1><br>
-    <a href="{{ url_for('logout') }}">Вийти</a>
+    <a class="btn btn-primary" href="{{ url_for('users.logout') }}">Вийти</a>
+    <a class="btn btn-primary" href="{{ url_for('messanger.my_friends') }}">Мої друзі</a>
+    <a class="btn btn-primary" href="{{ url_for('messanger.new_messages') }}">Мої повідомленя </a>
 
 
 {% endblock content %}

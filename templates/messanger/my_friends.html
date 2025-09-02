@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+ <h1>Мої друзі</h1>
+
+{% if friends %}
+    <ul>
+        {{friends}}
+        {% for friend in friends %}
+            <li>{{ friend.username }} — {{ friend.email }}</li>
+            <a class="btn"
+            href="{{url_for('messanger.create_message', recipient_name=friend.username)}}">написати</a>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>У вас ще немає друзів.</p>
+{% endif %}
+
+
+{% endblock %}
