@@ -5,7 +5,7 @@ from flask import Response
 from models import User
 from settings import DatabaseConfig, Session
 from flask_wtf.csrf import CSRFProtect
-
+from routes import bp_user
 
 app = Flask(__name__)
 app.config.from_object(DatabaseConfig)
@@ -27,8 +27,11 @@ def add_security_headers(response: Response) -> Response:
     response.set_cookie("session", value=session.get("csrf_token"), httponly=True, samesite="Strict") # type: ignore
     return response
 
+@app.route("/")
+def index():
+    return render_template("base.html")
 
-from routes import *
+app.register_blueprint(bp_user, url_prefix="/user")
 
 if __name__ == "__main__":
     print(app.url_map)

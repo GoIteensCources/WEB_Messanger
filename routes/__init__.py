@@ -1,1 +1,1 @@
-from .users import *
+from .users import bp as bp_user

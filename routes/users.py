@@ -1,32 +1,30 @@
-from flask import Flask, abort, flash, redirect, render_template, request, url_for
-from flask_login import LoginManager, current_user, login_required, login_user, logout_user
+from flask import abort, flash, redirect, render_template, request, url_for
+from flask_login import  current_user, login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app import app
 from models import User
 from settings import DatabaseConfig, Session
 
+from flask import Blueprint
 
-@app.route("/")
-def index():
-    return render_template("base.html")
+bp = Blueprint("users", __name__)
 
-@app.route("/account/admin/")
-@login_required
-def admin_panel():
-    # Перевіряти роль користувача перед відображенням сторінки
-    if not current_user.is_admin:
-        abort(403)
-    return "Ласкаво просимо до адмін-панелі!"
+# @bp.route("/account/admin/")
+# @login_required
+# def admin_panel():
+#     # Перевіряти роль користувача перед відображенням сторінки
+#     if not current_user.is_admin:
+#         abort(403)
+#     return "Ласкаво просимо до адмін-панелі!"
 
 
-@app.route("/account")
+@bp.route("/account")
 @login_required
 def account():
     return render_template("account.html")
 
 
-@app.route("/register", methods=["GET", "POST"])
+@bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form["username"]
@@ -51,7 +49,7 @@ def register():
     return render_template("auth/register.html", title="Реєстрація")
 
 
-@app.route("/login", methods=["GET", "POST"])
+@bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
@@ -68,7 +66,7 @@ def login():
     return render_template("auth/login.html", title="Вхід")
 
 
-@app.route("/logout")
+@bp.route("/logout")
 @login_required
 def logout():
     logout_user()
