@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from werkzeug.security import generate_password_hash
 
 from settings import Base, Session
-
+from settings import cache
 
 class User(UserMixin, Base):
     __tablename__ = "users"
@@ -46,6 +46,7 @@ class User(UserMixin, Base):
         return f"User: {self.username}"
 
     @staticmethod
+    @cache.memoize(timeout=60*3)
     def get(user_id: int):
         with Session() as conn:
             stmt = select(User).where(User.id == user_id)
@@ -54,8 +55,8 @@ class User(UserMixin, Base):
                 return user
 
     @staticmethod
+    @cache.memoize(timeout=60*3)
     def get_by_username(username):
-
         with Session() as conn:
             stmt = select(User).where(User.username == username)
             user = conn.scalar(stmt)

@@ -5,6 +5,7 @@
 <h2>Вхід</h2>
 
 <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
    
     Ім'я користувача: <input type="text" name="username"><br>
     Пароль: <input type="password" name="password"><br>

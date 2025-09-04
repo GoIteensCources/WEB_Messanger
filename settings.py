@@ -1,6 +1,7 @@
 import os
 
 import dotenv
+from flask_caching import Cache
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
@@ -15,11 +16,15 @@ class DatabaseConfig:
     ROOT_DB_USER = os.getenv("DB_PASSWORD")
     ROOT_DB_PASSWORD = os.getenv("DB_USER", "postgres")
 
-    SECRET_KEY = os.getenv("SECRET_KEY")
+    SECRET_KEY = os.getenv("SECRET_KEY", "dsklfj")
 
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
     MAX_FORM_MEMORY_SIZE = 1024 * 1024  # 1MB
     MAX_FORM_PARTS = 500  # Ліміт 500 полів
+
+    CACHE_TYPE = "simple"
+    CACHE_DEFAULT_TIMEOUT = 30
+    CACHE_KEY_PREFIX = "messnger_"
 
     def uri_postgres(self):
         return f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PASSWORD}@localhost:5432/{self.DATABASE_NAME}"
@@ -30,6 +35,10 @@ class DatabaseConfig:
 
 config = DatabaseConfig()
 
+
+# ===========
+cache = Cache()
+ #=============
 
 # Налаштування бази даних Postgres
 # engine = create_engine(config.uri_postgres(), echo=True)

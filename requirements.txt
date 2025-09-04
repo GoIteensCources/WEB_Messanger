@@ -4,4 +4,3 @@ python-dotenv
 SQLAlchemy
 Flask-Login
 Flask-WTF
-gunicorn

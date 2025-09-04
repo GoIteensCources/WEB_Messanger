@@ -5,7 +5,8 @@ from sqlalchemy import select
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from models import Friends, Message, User
-from settings import DatabaseConfig, Session
+from settings import DatabaseConfig, Session, cache
+
 
 bp = Blueprint("messanger", __name__)
 
@@ -107,7 +108,12 @@ def decline_friend_request(request_id):
     return redirect(url_for("messanger.friend_requests"))
 
 
+def make_cache_key():
+    return f"user {current_user.id}|{request.full_path}"
+
+
 @bp.route("/my_friends")
+@cache.cached(timeout=5*60, key_prefix=make_cache_key) # type: ignore
 @login_required
 def my_friends():
     with Session() as session:
@@ -130,7 +136,6 @@ def my_friends():
 @bp.route("/messages/create/<recipient_name>", methods=["get", "post"])
 @login_required
 def create_message(recipient_name):
-
     if request.method == "POST":
         message_text = request.form["text"]
         with Session() as session:

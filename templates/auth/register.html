@@ -5,11 +5,11 @@
 <h2>Реєстрація</h2>
 
 <form method="post">
-
-      Ім'я користувача: <input type="text" name="username"><br>
-      email користувача: <input type="email" name="email"><br>
-      Пароль: <input type="password" name="password"><br>
-      <input type="submit" value="Зареєструватися">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    Ім'я користувача: <input type="text" name="username"><br>
+    email користувача: <input type="email" name="email"><br>
+    Пароль: <input type="password" name="password"><br>
+    <input type="submit" value="Зареєструватися">
 </form>
     <br>
     <a href="{{ url_for('users.login') }}">Вхід</a>

@@ -4,10 +4,13 @@ from flask_wtf.csrf import CSRFProtect
 
 from models import User
 from routes import bp_messanger, bp_user
-from settings import DatabaseConfig
+from settings import DatabaseConfig, cache
+
 
 app = Flask(__name__)
 app.config.from_object(DatabaseConfig)
+
+cache.init_app(app)
 
 login_manager = LoginManager()
 login_manager.login_view = "login"  # type: ignore
@@ -33,6 +36,10 @@ def add_security_headers(response: Response) -> Response:
 def index():
     return render_template("base.html")
 
+@app.route('/clear-cache')
+def clear_cache():
+    cache.clear() # Очищуємо весь кеш
+    return "Кеш очищено!"
 
 app.register_blueprint(bp_user, url_prefix="/user")
 app.register_blueprint(bp_messanger, url_prefix="/chat")
